@@ -9,7 +9,9 @@ li,
 p {
   margin: 0;
   padding: 0;
+  font-family: Verdana, Arial, sans-serif;
 }
+
 a {
   color: inherit;
   text-decoration: none;
@@ -20,14 +22,26 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  border-top: 5px solid rgb(20, 20, 20);
+  border-bottom: 1px solid rgb(20, 20, 20);
 }
 
 .logo-center {
+  display: flex;
+  flex-direction: column;
   transform: translateX(-50%);
   left: 50%;
   position: absolute;
 }
 
+h1 {
+  font-size: 30px;
+}
+h2 {
+  font-size: 10px;
+  position: relative;
+  top: 48px;
+}
 .menu-line {
   width: 35px;
   height: 5px;
@@ -37,8 +51,9 @@ nav {
 
 .menu {
   padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
   transition: 0.4s;
-  margin-left: 15%;
   margin-right: auto;
 }
 

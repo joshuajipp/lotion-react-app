@@ -5,7 +5,8 @@ function Navigation() {
   return (
     <nav>
       <MenuLogo />
-      <div className="logo-center">Lotion</div>
+      <h1 className="logo-center">Lotion</h1>
+      <h2 className="logo-center">Like notion, but worse.</h2>
     </nav>
   );
 }
