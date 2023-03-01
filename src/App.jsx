@@ -1,5 +1,12 @@
+import React from "react";
+import Navigation from "./Navigation";
+
 function App() {
-  return <h1>Lotion</h1>;
+  return (
+    <div>
+      <Navigation />
+    </div>
+  );
 }
 
 export default App;

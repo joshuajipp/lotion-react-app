@@ -14,3 +14,34 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.logo-center {
+  transform: translateX(-50%);
+  left: 50%;
+  position: absolute;
+}
+
+.menu-line {
+  width: 35px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+}
+
+.menu {
+  padding: 10px;
+  transition: 0.4s;
+  margin-left: 15%;
+  margin-right: auto;
+}
+
+.menu:hover {
+  background-color: rgb(128, 128, 128);
+}
