@@ -43,16 +43,16 @@ h2 {
   top: 48px;
 }
 .menu-line {
-  width: 35px;
-  height: 5px;
+  width: 28px;
+  height: 4px;
   background-color: black;
   margin: 6px 0;
 }
 
 .menu {
   padding: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 18px;
+  padding-right: 18px;
   transition: 0.4s;
   margin-right: auto;
 }
