@@ -6,8 +6,8 @@ function Note(props) {
       <h4 className="note-item">contens</h4>
       <div className="date-text note-item">feb 21, 2021</div>
       <div className="note-text note-item">
-        this is my tits and i love them very fixking muasdfjkasdhf asdhfk asdf
-        sad asd f kjhsdaf ikasdhf
+        tjaskldfjlkasdjfasd fasdkjfhasdkjf sdfojihf sbiusdf isadf isadgf fgsdfi
+        iugs dfjgiysda fuhgvf sediuydfgsdjb fsdiyfbj
       </div>
     </div>
   );

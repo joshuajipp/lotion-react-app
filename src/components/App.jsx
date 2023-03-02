@@ -4,11 +4,13 @@ import BodyContent from "./BodyContent";
 
 function App() {
   const [isNoteVisable, setVisability] = React.useState(true);
+
   function hideItem() {
     setVisability(!isNoteVisable);
   }
+
   return (
-    <div>
+    <div class="body">
       <Navigation toggleNotes={hideItem} />
       <BodyContent isVisable={isNoteVisable} />
     </div>

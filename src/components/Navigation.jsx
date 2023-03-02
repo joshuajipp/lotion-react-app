@@ -2,7 +2,7 @@ import React from "react";
 
 function Navigation(props) {
   return (
-    <nav>
+    <nav className="navbar">
       <div className="menu button" onClick={props.toggleNotes}>
         <div className="menu-line"></div>
         <div className="menu-line"></div>
