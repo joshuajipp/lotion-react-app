@@ -3,7 +3,7 @@ import React from "react";
 function Navigation(props) {
   return (
     <nav>
-      <div className="menu button">
+      <div className="menu button" onClick={props.toggleNotes}>
         <div className="menu-line"></div>
         <div className="menu-line"></div>
         <div className="menu-line"></div>

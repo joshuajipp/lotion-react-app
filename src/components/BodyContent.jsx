@@ -1,17 +1,13 @@
 import React from "react";
 import NotesList from "./NotesList";
 
-function BodyContent() {
-  const [isNoteVisable, setVisability] = React.useState(true);
-
-  function hideItem() {
-    setVisability(!isNoteVisable);
-  }
-
+function BodyContent(props) {
   return (
-    <div className="body-content">
-      <NotesList isVisable={hideItem} />
-    </div>
+    props.isVisable && (
+      <div className="body-content">
+        <NotesList />
+      </div>
+    )
   );
 }
 
