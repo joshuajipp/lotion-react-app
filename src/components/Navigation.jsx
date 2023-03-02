@@ -1,7 +1,7 @@
 import React from "react";
 import MenuLogo from "./MenuLogo";
 
-function Navigation() {
+function Navigation(props) {
   return (
     <nav>
       <MenuLogo />
