@@ -23,6 +23,7 @@ body {
   height: 100vh;
 }
 .body-content {
+  display: flex;
   height: 100vh;
 }
 
@@ -128,4 +129,16 @@ h2 {
 
 .note-text.note-item {
   padding-bottom: 0;
+}
+.note-editor {
+  flex: 9;
+  height: 100%;
+}
+
+.note-editor-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 2%;
+  padding-top: 2%;
 }
