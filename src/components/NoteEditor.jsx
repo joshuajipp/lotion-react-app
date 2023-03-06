@@ -3,13 +3,14 @@ import "react-quill/dist/quill.snow.css";
 import React, { useState } from "react";
 
 function NoteEditor() {
-  const [setDateTime] = useState("");
+  const tzoffset = new Date().getTimezoneOffset() * 60000;
+  var currDateTime = new Date(Date.now() - tzoffset).toISOString().slice(0, 19);
 
+  const [dateTime, setDateTime] = useState(currDateTime);
   const [value, setValue] = useState("");
 
   const modules = {
     toolbar: [
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ font: [] }],
       [{ size: [] }],
       ["bold", "italic", "underline", "strike", "blockquote"],
@@ -29,41 +30,30 @@ function NoteEditor() {
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
+    second: "numeric",
   };
 
-  const formatDate = (when) => {
-    const formatted = new Date(when).toLocaleString("en-US", options);
-    if (formatted === "Invalid Date") {
-      return "";
-    }
-    return formatted;
-  };
-
-  const handleDateTimeChange = (event) => {
-    const formattedDateTime = formatDate(event.target.value);
-    setDateTime(formattedDateTime);
-  };
+  function onDateChange(event) {
+    setDateTime(event.target.value);
+  }
 
   return (
     <div className="note-editor">
       <div className="title-header">
-        <div className="rightside-header">
-          <div className="main-title">
-            <h1 className="note-title" contentEditable="true" spellCheck="true">
+        <div className="note-editor-header">
+          <div className="note-editor-title">
+            <h3 className="note-title" contentEditable="true" spellCheck="true">
               Untitled
-            </h1>
+            </h3>
             <input
-              className="datetime-picker"
+              className="datetime-selector"
               type="datetime-local"
-              onChange={handleDateTimeChange}
+              onChange={onDateChange}
+              value={dateTime}
             />
           </div>
-          <div className="save-button">
-            <button className="text-button">Save</button>
-          </div>
-          <div className="delete-button">
-            <button className="text-button">Delete</button>
-          </div>
+          <div className="save-button button">Save</div>
+          <div className="delete-button button">Delete</div>
         </div>
       </div>
       <div className="text-editor">

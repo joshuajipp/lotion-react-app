@@ -48,12 +48,13 @@ nav {
   position: absolute;
 }
 
-h1 {
+.header-title {
   font-size: 30px;
+  user-select: none;
 }
-h2 {
+.header-sub {
   font-size: 10px;
-  position: relative;
+  user-select: none;
   top: 48px;
 }
 .menu-line {
@@ -67,12 +68,12 @@ h2 {
   padding: 10px;
   padding-left: 18px;
   padding-right: 18px;
-  transition: 0.4s;
   margin-right: auto;
 }
 
 .button:hover {
   background-color: rgb(128, 128, 128);
+  transition: 1s;
 }
 
 .notes-container {
@@ -102,7 +103,7 @@ h2 {
 .plus-logo {
   font-size: 30px;
   font-weight: 900;
-  transition: 0.4s;
+  user-select: none;
 }
 
 .note-item-flex {
@@ -139,6 +140,36 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 2%;
-  padding-top: 2%;
+}
+
+.note-editor-title {
+  padding-left: 2%;
+  flex: 6;
+}
+
+.datetime-selector {
+  border: none;
+}
+
+.save-button,
+.delete-button {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  min-width: 100px;
+  flex: 1;
+  text-align: center;
+  user-select: none;
+  font-weight: bold;
+}
+.text-editor {
+  height: 100%;
+}
+.ql-container.ql-snow {
+  height: 100%;
+}
+.quill.editor-input {
+  height: 100%;
+}
+.ql-editor > p {
+  word-break: break-word;
 }
