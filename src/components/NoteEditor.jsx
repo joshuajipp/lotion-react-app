@@ -4,10 +4,15 @@ import React, { useState } from "react";
 
 function NoteEditor() {
   const tzoffset = new Date().getTimezoneOffset() * 60000;
-  var currDateTime = new Date(Date.now() - tzoffset).toISOString().slice(0, 19);
+  const currDateTime = new Date(Date.now() - tzoffset)
+    .toISOString()
+    .slice(0, 19);
 
   const [dateTime, setDateTime] = useState(currDateTime);
-  const [value, setValue] = useState("");
+
+  const [title, setTitle] = useState("Untitled");
+
+  const [textContent, setTextContent] = useState("");
 
   const modules = {
     toolbar: [
@@ -24,17 +29,21 @@ function NoteEditor() {
     ],
   };
 
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-  };
-
   function onDateChange(event) {
     setDateTime(event.target.value);
+  }
+
+  function onTitleChange(event) {
+    const title = event.target.value;
+    setTitle(title);
+  }
+
+  function onTextChange(event) {
+    const pElem = event;
+    const elemLen = pElem.length;
+    const text = pElem.substring(3, elemLen - 4);
+    console.log(text);
+    setTextContent(text);
   }
 
   return (
@@ -42,9 +51,13 @@ function NoteEditor() {
       <div className="title-header">
         <div className="note-editor-header">
           <div className="note-editor-title">
-            <h3 className="note-title" contentEditable="true" spellCheck="true">
-              Untitled
-            </h3>
+            <input
+              className="note-title"
+              contentEditable="true"
+              spellCheck="true"
+              onChange={onTitleChange}
+              value={title}
+            />
             <input
               className="datetime-selector"
               type="datetime-local"
@@ -59,8 +72,8 @@ function NoteEditor() {
       <div className="text-editor">
         <ReactQuill
           theme="snow"
-          value={value}
-          onChange={setValue}
+          value={textContent}
+          onChange={onTextChange}
           className="editor-input"
           modules={modules}
         />

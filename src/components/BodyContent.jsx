@@ -4,12 +4,10 @@ import NoteEditor from "./NoteEditor";
 
 function BodyContent(props) {
   return (
-    props.isVisable && (
-      <div className="body-content">
-        <NotesList />
-        <NoteEditor />
-      </div>
-    )
+    <div className="body-content">
+      {props.isVisable && <NotesList />}
+      <NoteEditor />
+    </div>
   );
 }
 

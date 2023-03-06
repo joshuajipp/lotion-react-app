@@ -9,7 +9,7 @@ function Navigation(props) {
         <div className="menu-line"></div>
       </div>
       <h1 className={"logo-center header-title"}>Lotion</h1>
-      <h2 className={"logo-center header-sub"}>Like notion, but worse.</h2>
+      <h2 className={"logo-center header-sub"}>Like Notion, but worse.</h2>
     </nav>
   );
 }

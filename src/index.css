@@ -113,6 +113,12 @@ nav {
   padding-left: 20px;
 }
 
+.note-title {
+  font-size: 1.3em;
+  font-weight: bold;
+  border: none;
+}
+
 .note-text {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -140,6 +146,7 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid rgb(20, 20, 20);
 }
 
 .note-editor-title {
@@ -153,8 +160,8 @@ nav {
 
 .save-button,
 .delete-button {
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding-top: 23.8px;
+  padding-bottom: 23.8px;
   min-width: 100px;
   flex: 1;
   text-align: center;
