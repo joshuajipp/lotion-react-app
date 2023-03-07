@@ -21,13 +21,13 @@ function NoteEditor(props) {
     props.setDateTime(event.target.value);
   }
 
-  function submitNote(event) {
+  function submitNote() {
     const noteObj = {
       title: props.title,
       content: props.textContent,
       dateTime: props.dateTime,
     };
-
+    props.onEditToggle();
     props.onAdd(noteObj);
   }
 
@@ -38,7 +38,7 @@ function NoteEditor(props) {
           <div className="note-editor-title">
             <input
               className="note-title"
-              contentEditable="true"
+              contentEditable={props.isEditMode}
               spellCheck="true"
               onChange={props.onTitleChange}
               value={props.title}
@@ -48,21 +48,23 @@ function NoteEditor(props) {
               type="datetime-local"
               onChange={onDateChange}
               value={props.dateTime}
+              readOnly={!props.isEditMode}
             />
           </div>
           <div className="save-button button" onClick={submitNote}>
-            Save
+            {props.isEditMode ? "Save" : "Edit"}
           </div>
           <div className="delete-button button">Delete</div>
         </div>
       </div>
-      <div className="text-editor">
+      <div className="text-editor edit">
         <ReactQuill
           theme="snow"
           value={props.textContent}
           onChange={props.onContentChange}
           className="editor-input"
           modules={modules}
+          readOnly={!props.isEditMode}
         />
       </div>
     </div>

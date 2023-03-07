@@ -16,6 +16,8 @@ function BodyContent(props) {
 
   const [dateTime, setDateTime] = React.useState(currDateTime);
 
+  const [isEditMode, setIsEditMode] = React.useState(true);
+
   function onTitleChange(event) {
     const title = event.target.value;
     setTitle(title);
@@ -40,6 +42,10 @@ function BodyContent(props) {
     setDateTime(newCurrDateTime);
   }
 
+  function onEditToggle() {
+    setIsEditMode(!isEditMode);
+  }
+
   return (
     <div className="body-content">
       {props.isVisable && <NotesList notesList={notes} newNote={newNote} />}
@@ -51,6 +57,8 @@ function BodyContent(props) {
         textContent={textContent}
         setDateTime={setDateTime}
         dateTime={dateTime}
+        isEditMode={isEditMode}
+        onEditToggle={onEditToggle}
       />
     </div>
   );
