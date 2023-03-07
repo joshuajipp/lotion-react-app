@@ -2,18 +2,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import React, { useState } from "react";
 
-function NoteEditor() {
-  const tzoffset = new Date().getTimezoneOffset() * 60000;
-  const currDateTime = new Date(Date.now() - tzoffset)
-    .toISOString()
-    .slice(0, 19);
-
-  const [dateTime, setDateTime] = useState(currDateTime);
-
-  const [title, setTitle] = useState("Untitled");
-
-  const [textContent, setTextContent] = useState("");
-
+function NoteEditor(props) {
   const modules = {
     toolbar: [
       [{ font: [] }],
@@ -28,22 +17,18 @@ function NoteEditor() {
       ["link", "image", "video"],
     ],
   };
-
   function onDateChange(event) {
-    setDateTime(event.target.value);
+    props.setDateTime(event.target.value);
   }
 
-  function onTitleChange(event) {
-    const title = event.target.value;
-    setTitle(title);
-  }
+  function submitNote(event) {
+    const noteObj = {
+      title: props.title,
+      content: props.textContent,
+      dateTime: props.dateTime,
+    };
 
-  function onTextChange(event) {
-    const pElem = event;
-    const elemLen = pElem.length;
-    const text = pElem.substring(3, elemLen - 4);
-    console.log(text);
-    setTextContent(text);
+    props.onAdd(noteObj);
   }
 
   return (
@@ -55,25 +40,27 @@ function NoteEditor() {
               className="note-title"
               contentEditable="true"
               spellCheck="true"
-              onChange={onTitleChange}
-              value={title}
+              onChange={props.onTitleChange}
+              value={props.title}
             />
             <input
               className="datetime-selector"
               type="datetime-local"
               onChange={onDateChange}
-              value={dateTime}
+              value={props.dateTime}
             />
           </div>
-          <div className="save-button button">Save</div>
+          <div className="save-button button" onClick={submitNote}>
+            Save
+          </div>
           <div className="delete-button button">Delete</div>
         </div>
       </div>
       <div className="text-editor">
         <ReactQuill
           theme="snow"
-          value={textContent}
-          onChange={onTextChange}
+          value={props.textContent}
+          onChange={props.onContentChange}
           className="editor-input"
           modules={modules}
         />
