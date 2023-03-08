@@ -18,6 +18,8 @@ function BodyContent(props) {
 
   const [isEditMode, setIsEditMode] = React.useState(true);
 
+  const [activeNote, setActiveNote] = React.useState(false);
+
   function onTitleChange(event) {
     const title = event.target.value;
     setTitle(title);
@@ -28,9 +30,11 @@ function BodyContent(props) {
   }
 
   function addNote(newNote) {
-    setNotes((prevNotes) => {
-      return [...prevNotes, newNote];
-    });
+    setNotes([
+      ...notes.slice(0, activeNote),
+      newNote,
+      ...notes.slice(activeNote + 1),
+    ]);
   }
 
   function newNote() {
@@ -40,26 +44,50 @@ function BodyContent(props) {
     setTextContent("");
     setTitle("Untitled");
     setDateTime(newCurrDateTime);
+    setNotes((prevNotes) => {
+      return [...prevNotes, { title: "Untitled", content: "", dateTime: "" }];
+    });
+    setActiveNote(notes.length);
+    setIsEditMode(true);
   }
 
   function onEditToggle() {
     setIsEditMode(!isEditMode);
   }
 
+  function onNoteClick(noteID) {
+    setActiveNote(noteID);
+
+    const currNote = notes.at(activeNote);
+    setTextContent(currNote.content);
+    setTitle(currNote.title);
+    setDateTime(currNote.dateTime);
+  }
+
   return (
     <div className="body-content">
-      {props.isVisable && <NotesList notesList={notes} newNote={newNote} />}
-      <NoteEditor
-        onAdd={addNote}
-        onTitleChange={onTitleChange}
-        onContentChange={onTextChange}
-        title={title}
-        textContent={textContent}
-        setDateTime={setDateTime}
-        dateTime={dateTime}
-        isEditMode={isEditMode}
-        onEditToggle={onEditToggle}
-      />
+      {props.isVisable && (
+        <NotesList
+          notesList={notes}
+          newNote={newNote}
+          activeNote={activeNote}
+          setActiveNote={onNoteClick}
+        />
+      )}
+      {activeNote !== false && (
+        <NoteEditor
+          onAdd={addNote}
+          onTitleChange={onTitleChange}
+          onContentChange={onTextChange}
+          title={title}
+          textContent={textContent}
+          setDateTime={setDateTime}
+          dateTime={dateTime}
+          isEditMode={isEditMode}
+          onEditToggle={onEditToggle}
+          activeNote={activeNote}
+        />
+      )}
     </div>
   );
 }

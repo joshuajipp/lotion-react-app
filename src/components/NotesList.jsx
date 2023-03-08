@@ -18,9 +18,12 @@ function NotesList(props) {
           return (
             <Note
               key={index}
+              id={index}
               title={noteItem.title}
               dateTime={noteItem.dateTime}
               content={noteItem.content}
+              setActiveNote={props.setActiveNote}
+              activeNote={props.activeNote}
             />
           );
         })}

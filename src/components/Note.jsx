@@ -16,10 +16,15 @@ function Note(props) {
     return formattedDateTime;
   }
   return (
-    <div className="note-item-flex">
+    <div
+      className={`note-item-flex ${
+        props.activeNote === props.id ? "note-active" : ""
+      }`}
+      onClick={() => props.setActiveNote(props.id)}
+    >
       <h4 className="note-item note-item-name">{props.title}</h4>
       <div className="date-text note-item">
-        {formatDateTime(props.dateTime)}
+        {props.dateTime === "" ? "" : formatDateTime(props.dateTime)}
       </div>
       <div
         className="note-text note-item"

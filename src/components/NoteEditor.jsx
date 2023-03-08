@@ -1,6 +1,6 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import React, { useState } from "react";
+import React from "react";
 
 function NoteEditor(props) {
   const modules = {
@@ -17,6 +17,7 @@ function NoteEditor(props) {
       ["link", "image", "video"],
     ],
   };
+
   function onDateChange(event) {
     props.setDateTime(event.target.value);
   }
@@ -27,6 +28,7 @@ function NoteEditor(props) {
       content: props.textContent,
       dateTime: props.dateTime,
     };
+
     props.onEditToggle();
     props.onAdd(noteObj);
   }
@@ -57,7 +59,7 @@ function NoteEditor(props) {
           <div className="delete-button button">Delete</div>
         </div>
       </div>
-      <div className="text-editor edit">
+      <div className={`text-editor ${props.isEditMode ? "" : "hidden"}`}>
         <ReactQuill
           theme="snow"
           value={props.textContent}
