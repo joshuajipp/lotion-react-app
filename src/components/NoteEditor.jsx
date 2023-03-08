@@ -56,7 +56,9 @@ function NoteEditor(props) {
           <div className="save-button button" onClick={submitNote}>
             {props.isEditMode ? "Save" : "Edit"}
           </div>
-          <div className="delete-button button">Delete</div>
+          <div className="delete-button button" onClick={props.onDelete}>
+            Delete
+          </div>
         </div>
       </div>
       <div className={`text-editor ${props.isEditMode ? "" : "hidden"}`}>

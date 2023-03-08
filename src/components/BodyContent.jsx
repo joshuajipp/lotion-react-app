@@ -18,7 +18,7 @@ function BodyContent(props) {
 
   const [isEditMode, setIsEditMode] = React.useState(true);
 
-  const [activeNote, setActiveNote] = React.useState(false);
+  const [activeNote, setActiveNote] = React.useState(-1);
 
   function onTitleChange(event) {
     const title = event.target.value;
@@ -58,10 +58,23 @@ function BodyContent(props) {
   function onNoteClick(noteID) {
     setActiveNote(noteID);
 
-    const currNote = notes.at(activeNote);
+    const currNote = notes.at(noteID);
     setTextContent(currNote.content);
     setTitle(currNote.title);
     setDateTime(currNote.dateTime);
+  }
+
+  function onDelete() {
+    setNotes(notes.filter((_, index) => index !== activeNote));
+    if (notes.length === 1) {
+      setActiveNote(-1);
+    } else {
+      setActiveNote(0);
+      const currNote = notes.at(0);
+      setTextContent(currNote.content);
+      setTitle(currNote.title);
+      setDateTime(currNote.dateTime);
+    }
   }
 
   return (
@@ -74,7 +87,7 @@ function BodyContent(props) {
           setActiveNote={onNoteClick}
         />
       )}
-      {activeNote !== false && (
+      {activeNote !== -1 && (
         <NoteEditor
           onAdd={addNote}
           onTitleChange={onTitleChange}
@@ -86,6 +99,7 @@ function BodyContent(props) {
           isEditMode={isEditMode}
           onEditToggle={onEditToggle}
           activeNote={activeNote}
+          onDelete={onDelete}
         />
       )}
     </div>
