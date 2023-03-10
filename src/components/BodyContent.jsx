@@ -1,21 +1,26 @@
 import React, { useEffect } from "react";
 import NotesList from "./NotesList";
 import NoteEditor from "./NoteEditor";
+import { useNavigate, useParams } from "react-router-dom";
 
 function BodyContent(props) {
+  const { activeNoteParam, editParam } = useParams();
+  console.log(localStorage.notes);
+  const navigate = useNavigate();
+
   const [notes, setNotes] = React.useState(
-    localStorage.notes !== "[]" ? JSON.parse(localStorage.notes) : []
+    localStorage.notes ? JSON.parse(localStorage.notes) : []
   );
 
   const [title, setTitle] = React.useState(
-    localStorage.notes !== "[]"
+    typeof localStorage.notes !== "undefined" && localStorage.notes !== "[]"
       ? JSON.parse(localStorage.notes).at(parseInt(localStorage.activeNote))
           .title
       : "Untitled"
   );
 
   const [textContent, setTextContent] = React.useState(
-    localStorage.notes !== "[]"
+    typeof localStorage.notes !== "undefined" && localStorage.notes !== "[]"
       ? JSON.parse(localStorage.notes).at(parseInt(localStorage.activeNote))
           .textContent
       : ""
@@ -26,7 +31,12 @@ function BodyContent(props) {
     .toISOString()
     .slice(0, 19);
 
-  const [dateTime, setDateTime] = React.useState(currDateTime);
+  const [dateTime, setDateTime] = React.useState(
+    typeof localStorage.notes !== "undefined" && localStorage.notes !== "[]"
+      ? JSON.parse(localStorage.notes).at(parseInt(localStorage.activeNote))
+          .dateTime
+      : currDateTime
+  );
 
   const [isEditMode, setIsEditMode] = React.useState(true);
 
@@ -45,7 +55,23 @@ function BodyContent(props) {
 
   useEffect(() => {
     localStorage.setItem("activeNote", activeNote.toString());
-  }, [activeNote]);
+    navigate(`/notes/${activeNote}${isEditMode ? "/edit" : ""}`);
+  }, [activeNote, isEditMode, navigate]);
+
+  useEffect(() => {
+    setActiveNote(parseInt(activeNoteParam));
+    if (editParam === "edit") {
+      setIsEditMode(true);
+    } else if (typeof editParam === "undefined") {
+      setIsEditMode(false);
+    }
+    const currNote = notes.at(parseInt(activeNoteParam));
+    if (notes.length !== 0) {
+      setTextContent(currNote.content);
+      setTitle(currNote.title);
+      setDateTime(currNote.dateTime);
+    }
+  }, []);
 
   function onTitleChange(event) {
     const title = event.target.value;
@@ -75,6 +101,7 @@ function BodyContent(props) {
       return [...prevNotes, { title: "Untitled", content: "", dateTime: "" }];
     });
     setActiveNote(notes.length);
+
     setIsEditMode(true);
   }
 
@@ -92,12 +119,27 @@ function BodyContent(props) {
   }
 
   function onDelete() {
-    setNotes(notes.filter((_, index) => index !== activeNote));
-    setActiveNote(0);
-    const currNote = notes.at(0);
-    setTextContent(currNote.content);
-    setTitle(currNote.title);
-    setDateTime(currNote.dateTime);
+    const answer = window.confirm("Are you sure?");
+    if (answer) {
+      setNotes(notes.filter((_, index) => index !== activeNote));
+      if (activeNote === 0) {
+        setActiveNote(0);
+        const currNote = notes.at(1);
+        if (notes.length !== 1) {
+          setTextContent(currNote.content);
+          setTitle(currNote.title);
+          setDateTime(currNote.dateTime);
+        }
+      } else {
+        if (notes.length !== 1) {
+          setActiveNote(0);
+          const currNote = notes.at(0);
+          setTextContent(currNote.content);
+          setTitle(currNote.title);
+          setDateTime(currNote.dateTime);
+        }
+      }
+    }
   }
 
   return (
