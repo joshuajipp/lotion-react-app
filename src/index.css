@@ -208,3 +208,25 @@ nav {
 .note-active {
   background-color: rgb(128, 128, 128);
 }
+
+.instr-text {
+  width: 100%;
+}
+
+.instr-text-p {
+  padding-top: auto;
+  text-align: center;
+  padding-top: calc(50vh - 62px);
+  color: rgba(39, 39, 39, 0.795);
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.no-notes-p {
+  padding-top: auto;
+  text-align: center;
+  color: rgba(39, 39, 39, 0.795);
+  font-size: larger;
+  font-weight: bolder;
+  padding-top: 5%;
+}

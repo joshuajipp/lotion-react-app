@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NotesList from "./NotesList";
 import NoteEditor from "./NoteEditor";
 
 function BodyContent(props) {
-  const [notes, setNotes] = React.useState([]);
+  const [notes, setNotes] = React.useState(
+    localStorage.notes !== "[]" ? JSON.parse(localStorage.notes) : []
+  );
 
-  const [title, setTitle] = React.useState("Untitled");
+  const [title, setTitle] = React.useState(
+    localStorage.notes !== "[]"
+      ? JSON.parse(localStorage.notes).at(parseInt(localStorage.activeNote))
+          .title
+      : "Untitled"
+  );
 
-  const [textContent, setTextContent] = React.useState("");
+  const [textContent, setTextContent] = React.useState(
+    localStorage.notes !== "[]"
+      ? JSON.parse(localStorage.notes).at(parseInt(localStorage.activeNote))
+          .textContent
+      : ""
+  );
 
   const tzoffset = new Date().getTimezoneOffset() * 60000;
   const currDateTime = new Date(Date.now() - tzoffset)
@@ -18,7 +30,22 @@ function BodyContent(props) {
 
   const [isEditMode, setIsEditMode] = React.useState(true);
 
-  const [activeNote, setActiveNote] = React.useState(-1);
+  const [activeNote, setActiveNote] = React.useState(
+    parseInt(localStorage.activeNote) !== -1
+      ? parseInt(localStorage.activeNote)
+      : -1
+  );
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+    if (notes.length === 0) {
+      setActiveNote(-1);
+    }
+  }, [notes]);
+
+  useEffect(() => {
+    localStorage.setItem("activeNote", activeNote.toString());
+  }, [activeNote]);
 
   function onTitleChange(event) {
     const title = event.target.value;
@@ -66,15 +93,11 @@ function BodyContent(props) {
 
   function onDelete() {
     setNotes(notes.filter((_, index) => index !== activeNote));
-    if (notes.length === 1) {
-      setActiveNote(-1);
-    } else {
-      setActiveNote(0);
-      const currNote = notes.at(0);
-      setTextContent(currNote.content);
-      setTitle(currNote.title);
-      setDateTime(currNote.dateTime);
-    }
+    setActiveNote(0);
+    const currNote = notes.at(0);
+    setTextContent(currNote.content);
+    setTitle(currNote.title);
+    setDateTime(currNote.dateTime);
   }
 
   return (
@@ -87,7 +110,7 @@ function BodyContent(props) {
           setActiveNote={onNoteClick}
         />
       )}
-      {activeNote !== -1 && (
+      {activeNote !== -1 ? (
         <NoteEditor
           onAdd={addNote}
           onTitleChange={onTitleChange}
@@ -101,6 +124,10 @@ function BodyContent(props) {
           activeNote={activeNote}
           onDelete={onDelete}
         />
+      ) : (
+        <div className="instr-text">
+          <p className="instr-text-p">Select a note, or create a new one.</p>
+        </div>
       )}
     </div>
   );
