@@ -11,7 +11,7 @@ function App() {
   }
 
   return (
-    <div class="body">
+    <div className="body">
       <Navigation toggleNotes={hideItem} />
       <BrowserRouter>
         <Routes>
